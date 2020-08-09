@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>WEB222 Store - Contact</title>
+
+</head>
+
+<body>
+  <!--    
+
+    Part 2: Contact Us Page
+
+    Requirements:
+
+    1. Use the same header/footer, colours, fonts, etc. as your index.html page.
+    It should be obvious to the user they they are still on the same site, and that
+    contact.html is part of your store.
+  -->
+
+  <header>
+    <ul>
+      <li>
+        <img src="./images/logo.png" width="50px" height="50px">
+      </li>
+      <li class="store-name">
+        store name
+      </li>
+    </ul>
+  </header>
+
+  <!--
+
+    2. Include an HTML Form for the user to fill out his or her information along
+    with their message to you. Your form should including the following, and all
+    fields should be mandatory unless otherwise noted, and use the most appropriate <input> type:
+    
+        - First Name
+        - Last Name
+        - Email Address
+        - Address
+        - City (use a <datalist> for autocomplete of common Canadian cities)
+        - Phone Number (must be a valid Canadian Phone Number, use regex)
+        - Postal Code (must be a valid Canadian Postal Code, use regex)
+        - Checkbox Option to be phoned ("Would you like to be phoned?")
+        - Radio Options to specify what this is about: one of "Question",
+          "Comment", or "Order Problem". If the user selects "Order Problem",
+          dynamically reveal another input box to enter the order number. In the
+          case of "Comment" or "Question" hide this input box.
+        - A large area to enter the message that they want to send
+        - A hidden input field with your name
+  -->
+  <form action="https://httpbin.org/post" method="POST" class="form-field">
+    <label>First name</label>
+    <input type="text" id="first-name" placeholder="First name" required name="first-name">
+    <label>Last name</label>
+    <input type="text" id="last-name" placeholder="Last name" required name="last-name">
+    <label>Email address</label>
+    <input type="text" id="email" placeholder="example@example.com" required name="email">
+    <label>Address</label>
+    <input type="text" id="address" placeholder="Address" required name="address">
+
+    <label>City</label>
+    <input list="city" id="city-choice" required name="city" />
+    <datalist id="city">
+      <option value="Toronto">
+      <option value="Ottawa">
+      <option value="Edmonton">
+      <option value="Victoria">
+      <option value="Winnipeg">
+      <option value="Halifax">
+      <option value="Charlottetown">
+      <option value="Whitehorse">
+    </datalist>
+
+    <label>Phone</label>
+    <input type="text" id="phone" placeholder="000-000-0000"
+      pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" required name="phone">
+    <label>Postal code</label>
+    <input type="text" id="postal-code" placeholder="A0A 0A0"
+      pattern="^[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]" required
+      name="postal-code">
+    <label>Would you like to be phoned?</label>
+    <input type="checkbox" title="Would you like to be phoned?" name="phoned">
+
+
+    <label class="radio-label" for="question">
+      <input type="radio" id="question" name="radio-option" value="question">
+      Question
+    </label>
+    <label class="radio-label" for="comment">
+      <input type="radio" id="comment" name="radio-option" value="comment">
+      Comment
+    </label>
+    <label class="radio-label" for="order-problem">
+      <input type="radio" id="order-problem" name="radio-option" value="order-problem">
+      Order Problem
+    </label>
+
+    <input id="order-number" class="order-number" placeholder="Order number" name="order-number">
+
+    <textarea class="message-area" required name="message"></textarea>
+    <input hidden value="name" name="name">
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- 3. The form should submit to
+    https://httpbin.org/post using the POST method, and only allow the user to submit when all data has been entered and
+    there aren't any validation errors. The data posted to httpbin.org should include all data defined in the form above
+    (e.g., visible and hidden fields). -->
+
+
+  <footer>
+    <form action="https://formspree.io/xaypvalb" method="POST">
+      <input placeholder="email" class="footer-email" id="footer-email" type="text" name="email">
+      <button type="submit">Subscribe</button>
+    </form>
+  </footer>
+
+</body>
+<script>
+  var radios = document.getElementsByName("radio-option");
+  var orderNumber = document.getElementById("order-number");
+
+  for (var i = 0; i < radios.length; i++) {
+    radios[i].addEventListener('change', (event) => {
+      if (event.target.id === "order-problem") {
+        orderNumber.style.display = "block"
+      } else {
+        orderNumber.style.display = "none"
+      }
+    })
+  }
+</script>
+
+</html>
